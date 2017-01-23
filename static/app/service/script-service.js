@@ -41,7 +41,7 @@ function ScriptService($http) {
 
 	  editScript: function(script) {
 	    var req = {
-	      url: '/movie/edit/script/' + script.id,
+	      url: '/movie/edit/script/' + script._id,
 	      method: 'PUT'
 	    }
 	    return $http(req);
