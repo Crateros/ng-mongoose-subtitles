@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.use('/movie', require('./controllers/movies'));
 
-mongoose.connect('mongodb://localhost/subtitles');
+// mongoose.connect('mongodb://localhost/subtitles');
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'static/index.html'));
