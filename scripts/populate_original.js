@@ -329,6 +329,20 @@ models.Subtitle.findOne({
 });
 
 models.Subtitle.findOne({
+  title: "blank"
+}, function(err, blank) {
+  if (!blank) {
+    models.Subtitle.create({
+      title: "blank",
+      subtitles: BLANK
+      }, function(err, subtitle) {
+
+      }
+    );
+  }
+});
+
+models.Subtitle.findOne({
   title: "original"
 }, function(err, original) {
   if (!original) {

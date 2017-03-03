@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+var bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({ extended: true }));
+
 var models = require('../models/subtitle');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/subtitles');
@@ -36,7 +39,24 @@ router.route('/script/:id')
 
 });
 
-// PUT /movie/create/script/:templateId
+// POST /movie/create/script/:templateId
+router.route('/create/script/:templateId')
+.post(function(req, res) {
+  models.Subtitle.findById(req.params.templateId, function(err, subtitle) {
+    if (err) {
+      console.log("error: ", err);
+    } else {
+      models.Subtitle.create({
+        title: req.body.title,
+        subtitles: subtitle.subtitles
+      }, function(err, createdSubtitle) {
+        res.send(createdSubtitle);
+      })
+    }
+  })
+})
+
+// PUT /movie/edit/script/:templateId
 router.route('/edit/script/:id')
 .put(function(req, res) {
 
@@ -54,7 +74,6 @@ router.route('/edit/script/:id')
 
 });
 
-
 // PUT /movie/new/script/:templateId
 router.route('/new/script')
 .put(function(req, res) {
@@ -65,8 +84,6 @@ router.route('/new/script')
   },function(err, subtitle) {
     console.log("error: ", err);
   });
-
 });
-
 
 module.exports = router;
